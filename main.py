@@ -10,7 +10,7 @@ white = (255,255,255)
 red = (204,35,28)
 
 class Map:
-   def __init__(self):
+    def __init__(self):
         self.W = 800
         self.H = 800
         self.foreground = (235, 219, 178)
@@ -20,6 +20,11 @@ class Map:
         self.display = pygame.display.set_mode((self.W,self.H))
         self.display.fill(self.background)
         pygame.display.set_caption('Snääääk')
+    def message(self,text,color):
+        self.font_style = pygame.font.SysFont(None, 30)
+        self.mesg = self.font_style.render(text, True, color)
+        self.display.blit(self.mesg, [800/3, 800/3])
+
 
 
 class Snake:
@@ -32,7 +37,6 @@ class Snake:
         self.dead = False
         self.foodx = round(random.randrange(0, self.x - 10) / 10) * 10
         self.foody = round(random.randrange(0, self.y - 10) / 10) * 10
-
 
 
 def main():
@@ -66,16 +70,18 @@ def main():
         snake.y += snake.y_tmp
         pygame.draw.rect(game_map.display, red, [snake.foodx, snake.foody, game_map.snake_block, game_map.snake_block])
         pygame.draw.rect(game_map.display, game_map.foreground, [snake.x, snake.y, 10, 10])
-        print(snake.x)
-        print(snake.foodx)
+
         if snake.x == snake.foodx and snake.y == snake.foody:
             print("Eaten")
 
         pygame.display.update()
         clock.tick(10)
+
+    game_map.display.fill(white)
+    game_map.message("You lost or quit the game.", red)
+    pygame.display.update()
     time.sleep(2)
     pygame.quit()
-
 
 if __name__ == "__main__":
     main()
