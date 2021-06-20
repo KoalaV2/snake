@@ -17,6 +17,7 @@ class Map:
         self.display = pygame.display.set_mode((self.W,self.H))
         self.display.fill(self.background)
         pygame.display.set_caption('Snääääk')
+
 class Snake:
     def __init__(self,x,y):
         self.x = x / 2
@@ -32,19 +33,19 @@ def main():
     snake = Snake(800,800)
     while snake.dead == False:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_q):
                 snake.dead = True
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_LEFT:
+                if event.key == pygame.K_h:
                     snake.x_tmp = -10
                     snake.y_tmp = 0
-                elif event.key == pygame.K_RIGHT:
+                elif event.key == pygame.K_l:
                     snake.x_tmp = 10
                     snake.y_tmp = 0
-                elif event.key == pygame.K_UP:
+                elif event.key == pygame.K_k:
                     snake.y_tmp = -10
                     snake.x_tmp = 0
-                elif event.key == pygame.K_DOWN:
+                elif event.key == pygame.K_j:
                     snake.y_tmp = 10
                     snake.x_tmp = 0
         print(event)
