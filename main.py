@@ -2,6 +2,7 @@
 
 import pygame
 import time
+import random
 
 pygame.init()
 
@@ -13,10 +14,15 @@ class Map:
         self.H = 800
         self.foreground = (235, 219, 178)
         self.background = (39, 39, 39)
+        self.snake_block = 10
+
+        self.foodx = round(random.randrange(0, self.W - self.snake_block))
+        self.foody = round(random.randrange(0, self.H - self.snake_block))
 
         self.display = pygame.display.set_mode((self.W,self.H))
         self.display.fill(self.background)
         pygame.display.set_caption('Snääääk')
+
 
 class Snake:
     def __init__(self,x,y):
@@ -53,7 +59,12 @@ def main():
             snake.dead = True
         snake.x += snake.x_tmp
         snake.y += snake.y_tmp
-        pygame.draw.rect(game_map.display, white, [snake.x, snake.y, 10, 10])
+        pygame.draw.rect(game_map.display, game_map.foreground, [snake.x, snake.y, 10, 10])
+        pygame.draw.rect(game_map.display, game_map.foreground, [game_map.foodx, game_map.foodx, game_map.snake_block, game_map.snake_block])
+        print(round(snake.x))
+        print(round(game_map.foodx))
+        if round(snake.x) == game_map.foodx and round(snake.y) == game_map.foody:
+            print("Eaten")
 
         pygame.display.update()
         clock.tick(10)
